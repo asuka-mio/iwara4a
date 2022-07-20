@@ -1,10 +1,7 @@
 package com.rerere.iwara4a.ui.component
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,7 +24,7 @@ import me.rerere.slantedtext.SlantedText
 
 @Composable
 fun MediaPreviewCard(navController: NavController = LocalNavController.current, mediaPreview: MediaPreview) {
-    ElevatedCard(
+    Card(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
@@ -73,6 +70,30 @@ fun MediaPreviewCard(navController: NavController = LocalNavController.current, 
                         .padding(4.dp),
                     verticalArrangement = Arrangement.spacedBy(2.dp)
                 ) {
+                    Text(
+                        text = mediaPreview.title.trim(),
+                        maxLines = 1,
+                        style = MaterialTheme.typography.titleMedium
+                    )
+
+                    if (mediaPreview.author.isNotEmpty()) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(1.dp)
+                        ) {
+                            Icon(
+                                modifier = Modifier.size(17.dp),
+                                painter = painterResource(R.drawable.upzhu),
+                                contentDescription = null
+                            )
+                            Text(
+                                text = mediaPreview.author,
+                                maxLines = 1,
+                                style = MaterialTheme.typography.titleSmall
+                            )
+                        }
+                    }
+
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(3.dp),
@@ -103,23 +124,6 @@ fun MediaPreviewCard(navController: NavController = LocalNavController.current, 
                             },
                             contentDescription = null
                         )
-                    }
-
-                    Text(
-                        text = mediaPreview.title.trim(),
-                        maxLines = 1,
-                        fontWeight = FontWeight.Medium
-                    )
-                    if (mediaPreview.author.isNotEmpty()) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(
-                                modifier = Modifier.size(17.dp),
-                                painter = painterResource(R.drawable.upzhu),
-                                contentDescription = null
-                            )
-                            Spacer(modifier = Modifier.width(1.dp))
-                            Text(text = mediaPreview.author, maxLines = 1, fontSize = 13.sp)
-                        }
                     }
                 }
             }
