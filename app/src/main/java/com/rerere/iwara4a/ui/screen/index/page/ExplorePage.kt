@@ -18,6 +18,7 @@ import com.google.accompanist.pager.rememberPagerState
 import com.rerere.iwara4a.R
 import com.rerere.iwara4a.ui.component.MediaPreviewCard
 import com.rerere.iwara4a.ui.component.PageList
+import com.rerere.iwara4a.ui.component.md.RoundedTabIndicator
 import com.rerere.iwara4a.ui.component.pagerTabIndicatorOffset
 import com.rerere.iwara4a.ui.component.rememberPageListPage
 import com.rerere.iwara4a.ui.local.LocalNavController
@@ -33,7 +34,7 @@ fun ExplorePage(indexViewModel: IndexViewModel) {
         TabRow(
             selectedTabIndex = pagerState.currentPage,
             indicator = {
-                TabRowDefaults.Indicator(
+                RoundedTabIndicator(
                     Modifier.pagerTabIndicatorOffset(pagerState, it)
                 )
             }

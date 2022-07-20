@@ -10,7 +10,7 @@ package com.rerere.iwara4a.util
  * @return Modify Result
  */
 fun initComposeHacking() = runCatching {
-    hackMinTabWidth()
+    //hackMinTabWidth()
 }
 
 // https://issuetracker.google.com/issues/226665301

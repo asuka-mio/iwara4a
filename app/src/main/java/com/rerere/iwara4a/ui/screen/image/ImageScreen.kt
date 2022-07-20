@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
@@ -38,6 +39,7 @@ import com.rerere.iwara4a.R
 import com.rerere.iwara4a.data.model.detail.image.ImageDetail
 import com.rerere.iwara4a.ui.component.*
 import com.rerere.iwara4a.ui.component.basic.Centered
+import com.rerere.iwara4a.ui.component.md.RoundedTabIndicator
 import com.rerere.iwara4a.ui.component.modifier.noRippleClickable
 import com.rerere.iwara4a.ui.local.LocalNavController
 import com.rerere.iwara4a.ui.util.plus
@@ -54,35 +56,37 @@ fun ImageScreen(
     val context = LocalContext.current
     val navController = LocalNavController.current
     val imageDetail by imageViewModel.imageDetail.collectAsState()
-    Scaffold(topBar = {
-        Md3TopBar(
-            title = {
-                Text(
-                    text = if (imageDetail is DataState.Success) imageDetail.read().title else stringResource(
-                        id = R.string.screen_image_topbar_title
-                    ),
-                    maxLines = 1
-                )
-            },
-            navigationIcon = {
-                BackIcon()
-            },
-            actions = {
-                if (imageDetail is DataState.Success) {
-                    IconButton(onClick = {
-                        imageDetail.readSafely()?.imageLinks?.forEachIndexed { i, link ->
-                            context.downloadImageNew(
-                                downloadUrlOfImage = link,
-                                filename = "${imageViewModel.imageId}_$i"
-                            )
+    Scaffold(
+        topBar = {
+            Md3TopBar(
+                title = {
+                    Text(
+                        text = if (imageDetail is DataState.Success) imageDetail.read().title else stringResource(
+                            id = R.string.screen_image_topbar_title
+                        ),
+                        maxLines = 1
+                    )
+                },
+                navigationIcon = {
+                    BackIcon()
+                },
+                actions = {
+                    if (imageDetail is DataState.Success) {
+                        IconButton(onClick = {
+                            imageDetail.readSafely()?.imageLinks?.forEachIndexed { i, link ->
+                                context.downloadImageNew(
+                                    downloadUrlOfImage = link,
+                                    filename = "${imageViewModel.imageId}_$i"
+                                )
+                            }
+                        }) {
+                            Icon(Icons.Outlined.Download, null)
                         }
-                    }) {
-                        Icon(Icons.Outlined.Download, null)
                     }
                 }
-            }
-        )
-    }) { padding ->
+            )
+        }
+    ) { padding ->
         when (imageDetail) {
             DataState.Empty, DataState.Loading -> {
                 RandomLoadingAnim()
@@ -108,7 +112,9 @@ fun ImageScreen(
                 }
             }
             is DataState.Success -> {
-                Box(modifier = Modifier.padding(padding)) {
+                Box(
+                    modifier = Modifier.padding(padding)
+                ) {
                     ImagePage(navController, imageDetail.read(), imageViewModel)
                 }
             }
@@ -127,13 +133,22 @@ private fun ImagePage(
     )
     val coroutineScope = rememberCoroutineScope()
     Column(
-        Modifier
+        modifier = Modifier
             .fillMaxSize()
-            .navigationBarsPadding()
+            .background(Color.Black)
     ) {
         if (imageDetail.imageLinks.size > 1) {
             ScrollableTabRow(
-                selectedTabIndex = pagerState.currentPage
+                selectedTabIndex = pagerState.currentPage,
+                indicator = {
+                    RoundedTabIndicator(
+                        Modifier.pagerTabIndicatorOffset(
+                            pagerState,
+                            it
+                        )
+                    )
+                },
+                edgePadding = 8.dp
             ) {
                 repeat(imageDetail.imageLinks.size) { page ->
                     Tab(
@@ -153,8 +168,7 @@ private fun ImagePage(
         HorizontalPager(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f)
-                .background(Color.Black),
+                .weight(1f),
             state = pagerState,
             count = imageDetail.imageLinks.size
         ) { page ->
@@ -184,11 +198,16 @@ private fun ImagePage(
         }
         ElevatedCard(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
+                .fillMaxWidth(),
+            shape = RoundedCornerShape(
+                bottomStart = 0.dp,
+                bottomEnd = 0.dp,
+                topStart = 16.dp,
+                topEnd = 16.dp
+            )
         ) {
             Column(
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.padding(16.dp).navigationBarsPadding(),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Row(

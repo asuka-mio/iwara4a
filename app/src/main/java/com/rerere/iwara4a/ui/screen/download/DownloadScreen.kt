@@ -76,7 +76,7 @@ fun DownloadScreen(
 private fun FolderCard() {
     val context = LocalContext.current
     val fileDir = context.getExternalFilesDir(Environment.DIRECTORY_MOVIES)
-    Card(
+    OutlinedCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)

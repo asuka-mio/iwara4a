@@ -1,5 +1,6 @@
 package com.rerere.iwara4a.ui.screen.history
 
+import android.widget.Space
 import androidx.compose.animation.rememberSplineBasedDecay
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -113,7 +114,7 @@ private fun HistoryList(
 @Composable
 private fun HistoryItem(historyData: HistoryData) {
     val navController = LocalNavController.current
-    ElevatedCard(
+    Card(
         modifier = Modifier
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .fillMaxWidth()
@@ -122,18 +123,27 @@ private fun HistoryItem(historyData: HistoryData) {
             }
     ) {
         Row(
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.height(IntrinsicSize.Min)
         ) {
             AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth(fraction = 0.4f)
-                    .aspectRatio(16 / 9f),
+                    .fillMaxHeight(),
                 model = historyData.preview,
                 contentDescription = null,
-                contentScale = ContentScale.FillWidth
+                contentScale = ContentScale.FillBounds
             )
-            Column(Modifier.padding(8.dp)) {
-                Text(text = historyData.title, fontWeight = FontWeight.Bold, maxLines = 1)
+            Column(
+                modifier = Modifier.padding(8.dp)
+            ) {
+                Text(
+                    text = historyData.title,
+                    maxLines = 2,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(4.dp))
                 Text(text = historyData.date.format(detail = true))
                 Text(text = historyData.historyType.asString())
             }

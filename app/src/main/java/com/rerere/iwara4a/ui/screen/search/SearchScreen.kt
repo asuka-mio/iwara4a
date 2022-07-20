@@ -28,6 +28,7 @@ import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import com.rerere.iwara4a.R
 import com.rerere.iwara4a.ui.component.*
+import com.rerere.iwara4a.ui.component.md.RoundedTabIndicator
 import com.rerere.iwara4a.ui.local.LocalNavController
 import com.rerere.iwara4a.util.stringResource
 import kotlinx.coroutines.launch
@@ -105,7 +106,7 @@ private fun TabComp(pagerState: PagerState) {
     TabRow(
         selectedTabIndex = pagerState.currentPage,
         indicator = {
-            TabRowDefaults.Indicator(Modifier.pagerTabIndicatorOffset(pagerState, it))
+            RoundedTabIndicator(Modifier.pagerTabIndicatorOffset(pagerState, it))
         }
     ) {
         Tab(

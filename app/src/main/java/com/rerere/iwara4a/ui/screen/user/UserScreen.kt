@@ -47,6 +47,7 @@ import com.rerere.iwara4a.data.model.user.UserData
 import com.rerere.iwara4a.data.model.user.UserFriendState
 import com.rerere.iwara4a.ui.component.*
 import com.rerere.iwara4a.ui.component.basic.Centered
+import com.rerere.iwara4a.ui.component.md.RoundedTabIndicator
 import com.rerere.iwara4a.ui.component.modifier.noRippleClickable
 import com.rerere.iwara4a.ui.component.paging3.items
 import com.rerere.iwara4a.ui.local.LocalNavController
@@ -286,7 +287,7 @@ private fun UserInfo(
         TabRow(
             selectedTabIndex = pagerState.currentPage,
             indicator = {
-                TabRowDefaults.Indicator(Modifier.pagerTabIndicatorOffset(pagerState, it))
+                RoundedTabIndicator(Modifier.pagerTabIndicatorOffset(pagerState, it))
             }
         ) {
             Tab(

@@ -18,6 +18,7 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.rerere.iwara4a.R
 import com.rerere.iwara4a.ui.component.*
+import com.rerere.iwara4a.ui.component.md.RoundedTabIndicator
 import com.rerere.iwara4a.ui.local.LocalNavController
 import com.rerere.iwara4a.util.DataState
 import com.rerere.iwara4a.util.stringResource
@@ -60,7 +61,7 @@ fun PlaylistScreen(
                 TabRow(
                     selectedTabIndex = pager.currentPage,
                     indicator = {
-                        TabRowDefaults.Indicator(
+                        RoundedTabIndicator(
                             Modifier.pagerTabIndicatorOffset(pager, it)
                         )
                     }

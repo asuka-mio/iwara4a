@@ -31,6 +31,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.rerere.iwara4a.R
 import com.rerere.iwara4a.data.model.oreno3d.OrenoPreview
 import com.rerere.iwara4a.ui.component.appendIndicator
+import com.rerere.iwara4a.ui.component.md.RoundedTabIndicator
 import com.rerere.iwara4a.ui.component.modifier.nsfw
 import com.rerere.iwara4a.ui.component.pagerTabIndicatorOffset
 import com.rerere.iwara4a.ui.component.paging3.items
@@ -63,7 +64,7 @@ private fun Tab(pagerState: PagerState) {
     TabRow(
         selectedTabIndex = pagerState.currentPage,
         indicator = {
-            TabRowDefaults.Indicator(
+            RoundedTabIndicator(
                 Modifier.pagerTabIndicatorOffset(pagerState, it)
             )
         }
