@@ -44,7 +44,7 @@ fun IndexDrawer(
     var dialog by remember {
         mutableStateOf(false)
     }
-    if(dialog){
+    if (dialog) {
         AlertDialog(
             onDismissRequest = { dialog = false },
             title = {
@@ -152,36 +152,17 @@ fun IndexDrawer(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(16.dp)
                 .weight(1f)
                 .verticalScroll(rememberScrollState())
         ) {
-            // 历史记录
-            NavigationDrawerItem(
-                selected = false,
-                icon = {
-                    Icon(Icons.Outlined.People, null)
-                },
-                label = {
-                    Text(text = stringResource(R.string.screen_index_drawer_item_friends))
-                },
-                badge = {
-                    AnimatedVisibility(visible = indexViewModel.self.friendRequest > 0) {
-                        Box(
-                            modifier = Modifier
-                                .background(MaterialTheme.colorScheme.primary, CircleShape)
-                                .padding(vertical = 4.dp, horizontal = 6.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(text = indexViewModel.self.friendRequest.toString())
-                        }
-                    }
-                },
-                onClick = {
-                    coroutineScope.launch {
-                        drawerState.close()
-                        navController.navigate("friends")
-                    }
-                }
+            Text(
+                text = "内容",
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 8.dp),
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
             // 历史记录
@@ -238,24 +219,6 @@ fun IndexDrawer(
                 badge = {}
             )
 
-            // 关注
-            NavigationDrawerItem(
-                selected = false,
-                icon = {
-                    Icon(Icons.Outlined.SupervisedUserCircle, null)
-                },
-                label = {
-                    Text(stringResource(R.string.screen_follow_title))
-                },
-                badge = {},
-                onClick = {
-                    coroutineScope.launch {
-                        drawerState.close()
-                        navController.navigate("following")
-                    }
-                }
-            )
-
             // 播单
             NavigationDrawerItem(
                 onClick = {
@@ -272,6 +235,66 @@ fun IndexDrawer(
                 },
                 badge = {},
                 selected = false
+            )
+
+            Divider(
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+            )
+
+            Text(
+                text = "社交",
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 8.dp),
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            // 好友
+            NavigationDrawerItem(
+                selected = false,
+                icon = {
+                    Icon(Icons.Outlined.People, null)
+                },
+                label = {
+                    Text(text = stringResource(R.string.screen_index_drawer_item_friends))
+                },
+                badge = {
+                    AnimatedVisibility(visible = indexViewModel.self.friendRequest > 0) {
+                        Box(
+                            modifier = Modifier
+                                .background(MaterialTheme.colorScheme.primary, CircleShape)
+                                .padding(vertical = 4.dp, horizontal = 6.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(text = indexViewModel.self.friendRequest.toString())
+                        }
+                    }
+                },
+                onClick = {
+                    coroutineScope.launch {
+                        drawerState.close()
+                        navController.navigate("friends")
+                    }
+                }
+            )
+
+            // 关注
+            NavigationDrawerItem(
+                selected = false,
+                icon = {
+                    Icon(Icons.Outlined.SupervisedUserCircle, null)
+                },
+                label = {
+                    Text(stringResource(R.string.screen_follow_title))
+                },
+                badge = {},
+                onClick = {
+                    coroutineScope.launch {
+                        drawerState.close()
+                        navController.navigate("following")
+                    }
+                }
             )
 
             // 论坛
@@ -292,9 +315,22 @@ fun IndexDrawer(
                 selected = false
             )
 
+            Divider(
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+            )
+            Text(
+                text = "APP",
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 8.dp),
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+
             // 设置
             NavigationDrawerItem(
-                onClick =  {
+                onClick = {
                     coroutineScope.launch {
                         drawerState.close()
                         navController.navigate("setting")
@@ -315,7 +351,7 @@ fun IndexDrawer(
             var shouldDisplayDonation by remember {
                 mutableStateOf(false)
             }
-            if(donationDialog) {
+            if (donationDialog) {
                 AlertDialog(
                     onDismissRequest = {
                         donationDialog = false
@@ -352,7 +388,7 @@ fun IndexDrawer(
                     }
                 )
             }
-            if(shouldDisplayDonation) {
+            if (shouldDisplayDonation) {
                 NavigationDrawerItem(
                     onClick = {
                         donationDialog = true
